@@ -1,0 +1,13 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Delete Venue{% endblock %}
+{% block content %}
+    <div class="confirm">
+        
+        <form action="" class="delete" method="post">
+            <h1>Are you sure you want to delete?</h1>
+            <a href="/venues/{{ venue.id }}/delete"><button class="btn btn-danger btn-lg">Yes</button></a>
+        </form>
+        <br>
+        <a href="/venues/{{ venue.id }}"><button class="btn btn-primary btn-lg">Back</button></a>
+    </div>
+{% endblock %}

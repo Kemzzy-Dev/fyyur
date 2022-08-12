@@ -1,7 +1,9 @@
 from datetime import datetime
 from flask_wtf import Form
 from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField
-from wtforms.validators import DataRequired, AnyOf, URL
+from wtforms.validators import DataRequired, AnyOf, URL, Regexp
+import enum
+
 
 class ShowForm(Form):
     artist_id = StringField(
@@ -100,17 +102,19 @@ class VenueForm(Form):
             ('Folk', 'Folk'),
             ('Funk', 'Funk'),
             ('Hip-Hop', 'Hip-Hop'),
-            ('Heavy Metal', 'Heavy Metal'),
+            ('Heavy_Metal', 'Heavy_Metal'),
             ('Instrumental', 'Instrumental'),
             ('Jazz', 'Jazz'),
-            ('Musical Theatre', 'Musical Theatre'),
+            ('Musical_Theatre', 'Musical_Theatre'),
             ('Pop', 'Pop'),
             ('Punk', 'Punk'),
+            ('Swing', 'Swing'),
             ('R&B', 'R&B'),
             ('Reggae', 'Reggae'),
-            ('Rock n Roll', 'Rock n Roll'),
+            ('Rock_n_Roll', 'Rock_n_Roll'),
             ('Soul', 'Soul'),
             ('Other', 'Other'),
+            
         ]
     )
     facebook_link = StringField(
@@ -125,8 +129,6 @@ class VenueForm(Form):
     seeking_description = StringField(
         'seeking_description'
     )
-
-
 
 class ArtistForm(Form):
     name = StringField(
@@ -193,7 +195,7 @@ class ArtistForm(Form):
     )
     phone = StringField(
         # TODO implement validation logic for phone 
-        'phone'
+        'phone', validators=[Regexp('/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d+)\)?)[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?)+)(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i')],
     )
     image_link = StringField(
         'image_link'
@@ -209,15 +211,15 @@ class ArtistForm(Form):
             ('Folk', 'Folk'),
             ('Funk', 'Funk'),
             ('Hip-Hop', 'Hip-Hop'),
-            ('Heavy Metal', 'Heavy Metal'),
+            ('Heavy_Metal', 'Heavy_Metal'),
             ('Instrumental', 'Instrumental'),
             ('Jazz', 'Jazz'),
-            ('Musical Theatre', 'Musical Theatre'),
+            ('Musical_Theatre', 'Musical_Theatre'),
             ('Pop', 'Pop'),
             ('Punk', 'Punk'),
             ('R&B', 'R&B'),
             ('Reggae', 'Reggae'),
-            ('Rock n Roll', 'Rock n Roll'),
+            ('Rock_n_Roll', 'Rock_n_Roll'),
             ('Soul', 'Soul'),
             ('Other', 'Other'),
         ]
