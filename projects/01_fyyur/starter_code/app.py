@@ -94,12 +94,14 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # TODO: replace with real venue data from the venues table, using venue_id
-  data = Venue.query.get(venue_id)
-  genres = data.genres.split(' ')#splitting the string data from the db into lists
+  data = Venue.query.join(Show).filter(Venue.id == venue_id).all()
+  data_object = data[0]
+  genres = Venue.query.get(venue_id).genres.split(' ')#splitting the string data from the db into lists
+
 
   upcoming_shows = []
   past_shows = []
-  for show in data.shows:
+  for show in data_object.shows:
     if show.date >= str(datetime.now()):
       upcoming_shows.insert(0, show)
     else:
@@ -108,7 +110,7 @@ def show_venue(venue_id):
   upcoming_shows_count=len(upcoming_shows)
 
   
-  return render_template('pages/show_venue.html', venue=data, past_shows=past_shows, genres=genres, upcoming_shows=upcoming_shows, upcoming_shows_count=upcoming_shows_count, past_shows_count=past_shows_count)
+  return render_template('pages/show_venue.html', venue=data_object, past_shows=past_shows, genres=genres, upcoming_shows=upcoming_shows, upcoming_shows_count=upcoming_shows_count, past_shows_count=past_shows_count)
 
 #  Create Venue
 #  ----------------------------------------------------------------
