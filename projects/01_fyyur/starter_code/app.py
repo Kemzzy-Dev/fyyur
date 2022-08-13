@@ -210,12 +210,14 @@ def show_artist(artist_id):
   # shows the artist page with the given artist_id
   # TODO: replace with real artist data from the artist table, using artist_id
 
-  data = Artist.query.get(artist_id)
-  genres = data.genres.split(' ')#To split the string from the db to lists 
+  data = Artist.query.join(Show).filter(Artist.id == artist_id).all()
+  data_object = data[0]
+  genres = Artist.query.get(artist_id).genres.split(' ')#To split the string from the db to lists
 
   upcoming_shows = []
   past_shows = []
-  for show in data.shows:
+
+  for show in data_object.shows:
     if show.date >= str(datetime.now()):
       upcoming_shows.insert(0, show)
     else:
@@ -223,7 +225,7 @@ def show_artist(artist_id):
   past_shows_count=len(past_shows)
   upcoming_shows_count=len(upcoming_shows)
   
-  return render_template('pages/show_artist.html', artist=data, upcoming_shows=upcoming_shows, genres=genres, past_shows=past_shows, past_shows_count=past_shows_count,upcoming_shows_count=upcoming_shows_count )
+  return render_template('pages/show_artist.html', artist=data_object, upcoming_shows=upcoming_shows, genres=genres, past_shows=past_shows, past_shows_count=past_shows_count,upcoming_shows_count=upcoming_shows_count )
 
 #  Update
 #  ----------------------------------------------------------------
